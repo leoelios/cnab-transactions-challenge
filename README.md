@@ -10,6 +10,7 @@ Some tools help me during sorting data for solving this challenge.
 
 - [Figma (Prototype, Diagrams)](https://www.figma.com/file/TR3N9t9JZ5W8vxPap8UILV/cnab-transactions-challenge?type=whiteboard&node-id=0%3A1&t=xKIKNvWa3WRq66oF-1)
 - [Github Projects (Task management)](https://github.com/leoelios/desafio-dev/projects?query=is%3Aopen)
+- [Gitmoji (Emoji commit guide)](https://gitmoji.dev/)
 
 ## :tada: Live (try in cloud)
 
