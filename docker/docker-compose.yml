@@ -1,36 +1,37 @@
 version: "3.8"
 services:
   postgresql-master:
-    image: postgres:15-alpine
+    image: 'docker.io/bitnami/postgresql:11-debian-10'
     ports:
       - '5432:5432'
     environment:
-      - POSTGRES_USERNAME=admin
-      - POSTGRES_PASSWORD=123456789
-      - POSTGRES_PGAUDIT_LOG=READ,WRITE
-      - POSTGRES_LOG_HOSTNAME=true
-      - POSTGRES_REPLICATION_MODE=master
-      - POSTGRES_REPLICATION_USER=replication_user
-      - POSTGRES_REPLICATION_PASSWORD=123456789
+      - POSTGRESQL_USERNAME=admin
+      - POSTGRESQL_PASSWORD=123456789
+      - POSTGRESQL_PGAUDIT_LOG=READ,WRITE
+      - POSTGRESQL_LOG_HOSTNAME=true
+      - POSTGRESQL_REPLICATION_MODE=master
+      - POSTGRESQL_REPLICATION_USER=replication_user
+      - POSTGRESQL_REPLICATION_PASSWORD=replication_password
+      - POSTGRESQL_DATABASE=postgresql-master
     volumes:
       - ./postgresql-master:/var/lib/postgresql/data
 
   postgresql-slave:
-    image: postgres:15-alpine
+    image: 'docker.io/bitnami/postgresql:11-debian-10'
     ports:
       - '5433:5432'
     depends_on:
       - postgresql-master
     environment:
-      - POSTGRES_USERNAME=admin
-      - POSTGRES_PASSWORD=123456789
-      - POSTGRES_PGAUDIT_LOG=READ,WRITE
-      - POSTGRES_LOG_HOSTNAME=true
-      - POSTGRES_REPLICATION_MODE=slave
-      - POSTGRES_REPLICATION_USER=replication_user
-      - POSTGRES_REPLICATION_PASSWORD=123456789
-      - POSTGRES_MASTER_PORT_NUMBER=5432
-      - POSTGRES_MASTER_HOST=postgresql-master
+      - POSTGRESQL_USERNAME=admin
+      - POSTGRESQL_PASSWORD=123456789
+      - POSTGRESQL_MASTER_HOST=postgresql-master
+      - POSTGRESQL_PGAUDIT_LOG=READ,WRITE
+      - POSTGRESQL_LOG_HOSTNAME=true
+      - POSTGRESQL_REPLICATION_MODE=slave
+      - POSTGRESQL_REPLICATION_USER=replication_user
+      - POSTGRESQL_REPLICATION_PASSWORD=replication_password
+      - POSTGRESQL_MASTER_PORT_NUMBER=5432
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
