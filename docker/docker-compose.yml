@@ -1,16 +1,37 @@
 version: "3.8"
 services:
-  db:
+  postgresql-master:
     image: postgres:15-alpine
-    restart: always
-    environment:
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=123456789
-      - DB_NAME=postgres
     ports:
-      - 5432:5432
+      - '5432:5432'
     volumes:
       - db:/var/lib/postgresql/data
+    environment:
+      - POSTGRESQL_USERNAME=admin
+      - POSTGRESQL_DATABASE=123456789
+      - POSTGRESQL_PGAUDIT_LOG=READ,WRITE
+      - POSTGRESQL_LOG_HOSTNAME=true
+      - POSTGRESQL_REPLICATION_MODE=master
+      - POSTGRESQL_REPLICATION_USER=replication_user
+      - POSTGRESQL_REPLICATION_PASSWORD=123456789
+      - ALLOW_EMPTY_PASSWORD=yes
+
+  postgresql-slave:
+    image: postgres:15-alpine
+    ports:
+      - '5433:5432'
+    depends_on:
+      - postgresql-master
+    environment:
+      - POSTGRESQL_USERNAME=admin
+      - POSTGRESQL_PASSWORD=123456789
+      - POSTGRESQL_PGAUDIT_LOG=READ,WRITE
+      - POSTGRESQL_LOG_HOSTNAME=true
+      - POSTGRESQL_REPLICATION_MODE=slave
+      - POSTGRESQL_REPLICATION_USER=replication_user
+      - POSTGRESQL_REPLICATION_PASSWORD=123456789
+      - POSTGRESQL_MASTER_PORT_NUMBER=5432
+      - POSTGRESQL_MASTER_HOST=postgresql-master
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
@@ -27,7 +48,7 @@ services:
     depends_on:
       - zookeeper
     ports:
-      - 9092:9092
+      - '9092:9092'
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
@@ -43,7 +64,7 @@ services:
     depends_on:
       - kafka
     ports:
-      - 19000:9000
+      - '19000:9000'
     environment:
       KAFKA_BROKERCONNECT: kafka:29092
 
@@ -52,5 +73,5 @@ networks:
     driver: bridge
 
 volumes:
-  db:
+  postgresql_master_data:
     driver: local
