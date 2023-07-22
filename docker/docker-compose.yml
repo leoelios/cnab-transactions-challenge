@@ -4,17 +4,16 @@ services:
     image: postgres:15-alpine
     ports:
       - '5432:5432'
-    volumes:
-      - db:/var/lib/postgresql/data
     environment:
-      - POSTGRESQL_USERNAME=admin
-      - POSTGRESQL_DATABASE=123456789
-      - POSTGRESQL_PGAUDIT_LOG=READ,WRITE
-      - POSTGRESQL_LOG_HOSTNAME=true
-      - POSTGRESQL_REPLICATION_MODE=master
-      - POSTGRESQL_REPLICATION_USER=replication_user
-      - POSTGRESQL_REPLICATION_PASSWORD=123456789
-      - ALLOW_EMPTY_PASSWORD=yes
+      - POSTGRES_USERNAME=admin
+      - POSTGRES_PASSWORD=123456789
+      - POSTGRES_PGAUDIT_LOG=READ,WRITE
+      - POSTGRES_LOG_HOSTNAME=true
+      - POSTGRES_REPLICATION_MODE=master
+      - POSTGRES_REPLICATION_USER=replication_user
+      - POSTGRES_REPLICATION_PASSWORD=123456789
+    volumes:
+      - ./postgresql-master:/var/lib/postgresql/data
 
   postgresql-slave:
     image: postgres:15-alpine
@@ -23,15 +22,15 @@ services:
     depends_on:
       - postgresql-master
     environment:
-      - POSTGRESQL_USERNAME=admin
-      - POSTGRESQL_PASSWORD=123456789
-      - POSTGRESQL_PGAUDIT_LOG=READ,WRITE
-      - POSTGRESQL_LOG_HOSTNAME=true
-      - POSTGRESQL_REPLICATION_MODE=slave
-      - POSTGRESQL_REPLICATION_USER=replication_user
-      - POSTGRESQL_REPLICATION_PASSWORD=123456789
-      - POSTGRESQL_MASTER_PORT_NUMBER=5432
-      - POSTGRESQL_MASTER_HOST=postgresql-master
+      - POSTGRES_USERNAME=admin
+      - POSTGRES_PASSWORD=123456789
+      - POSTGRES_PGAUDIT_LOG=READ,WRITE
+      - POSTGRES_LOG_HOSTNAME=true
+      - POSTGRES_REPLICATION_MODE=slave
+      - POSTGRES_REPLICATION_USER=replication_user
+      - POSTGRES_REPLICATION_PASSWORD=123456789
+      - POSTGRES_MASTER_PORT_NUMBER=5432
+      - POSTGRES_MASTER_HOST=postgresql-master
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
