@@ -1,7 +1,25 @@
 # Front-end project for interface
 
-## Screens
+## :art: Prototype
 
-- Upload CNAB file
-- Show transactions
-- Show balance by customer
+The prototype was builded using Figma Design Tool.
+
+[Click here to see the UI/UX](https://www.figma.com/file/90zyaBNOt65fA0Ne42AKDW/design?type=design&node-id=0%3A1&mode=design&t=L2Xk6ddyxsAUDrPL-1)
+
+## :computer: Screens
+
+### Public
+
+- Not found fallback screen (/\*!)
+- Login page (/)
+
+### Private
+
+#### Write role
+
+- Upload CNAB file (load transactions) (/upload-cnab)
+
+#### Read role
+
+- Search by merchants (/merchant)
+- Get merchant details (/merchant/{uuid})
