@@ -1,14 +1,22 @@
 import { createBrowserRouter } from "react-router-dom";
+import Login from "./auth/login";
+import Root from "./root";
+import NotFound from "./not-found";
+import ConfirmCode from "./auth/confirm-code";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <div>hello</div>,
-    errorElement: <div>404 test</div>
+    element: <Root />,
+    errorElement: <NotFound />
   },
   {
-    path: "/other",
-    element: <div>other</div>
+    path: '/login',
+    element: <Login />
+  },
+  {
+    path: '/login/confirm-code',
+    element: <ConfirmCode />
   }
 ]);
 
