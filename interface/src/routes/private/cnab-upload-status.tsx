@@ -10,7 +10,6 @@ import CenterModal from "../../components/center-modal";
 import ClickAndCopy from "../../components/click-and-copy";
 import { useEffect, useState } from "react";
 import { Transaction } from "../../types/transaction";
-import { Merchant } from "../../types/merchant";
 import PrivateRoute from "../../components/private-route";
 import TransactionLine from "../../components/transaction-line";
 
