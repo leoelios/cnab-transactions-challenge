@@ -7,12 +7,11 @@ COPY . .
 RUN npm i && npm run build
 
 # Serve production artifact
-FROM node:alpine
+FROM nginx:latest
 
-RUN npm i -g serve
-RUN apk add xsel
+RUN rm /etc/nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
-WORKDIR /srv/app
+COPY nginx-config /etc/nginx
+
+WORKDIR /var/www/enviai.shop/html
 COPY --from=0 /srv/app/dist .
-
-ENTRYPOINT ["serve", "-n", "-p", "80"]
