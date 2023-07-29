@@ -5,6 +5,10 @@ import ReactDOM from 'react-dom/client'
 import { ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material/styles';
 import { CssBaseline, GlobalStyles } from '@mui/material';
 import AuthContext from './context/auth-context';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+
+library.add(fas)
 
 const secondary = "#463B5F";
 
@@ -14,6 +18,9 @@ let darkTheme = createTheme({
     primary: {
       main: '#F9C33A',
     },
+    secondary: {
+      main: '#AB95DD'
+    }
   },
 });
 

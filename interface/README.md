@@ -11,7 +11,7 @@ The prototype was builded using Figma Design Tool.
 ### Public
 
 - Not found fallback screen (/\*!)
-- Login page (/)
+- Login page (/login)
 
 ### Private
 
@@ -21,5 +21,5 @@ The prototype was builded using Figma Design Tool.
 
 #### Read role
 
-- Search by merchants (/merchant)
+- Search by merchants (/merchants)
 - Get merchant details (/merchant/{uuid})
