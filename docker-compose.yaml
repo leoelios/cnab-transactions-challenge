@@ -7,38 +7,19 @@ services:
     ports:
       - 80:80
 
-  postgresql:
-    image: "docker.io/bitnami/postgresql:11-debian-10"
+  database:
+    image: postgres:latest
+    container_name: master_database
+    restart: always
+    volumes:
+      - database-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     environment:
-      - POSTGRESQL_USERNAME=postgres
-      - POSTGRESQL_PASSWORD=postgres
-      - POSTGRESQL_PGAUDIT_LOG=READ,WRITE
-      - POSTGRESQL_LOG_HOSTNAME=true
-      - POSTGRESQL_REPLICATION_MODE=master
-      - POSTGRESQL_REPLICATION_USER=replica
-      - POSTGRESQL_REPLICATION_PASSWORD=replica
-      - POSTGRESQL_DATABASE=postgresql
-    volumes:
-      - ./postgresql:/var/lib/postgresql/data
-
-  postgresql-slave:
-    image: "docker.io/bitnami/postgresql:11-debian-10"
-    ports:
-      - "5433:5432"
-    depends_on:
-      - postgresql
-    environment:
-      - POSTGRESQL_USERNAME=postgres
-      - POSTGRESQL_PASSWORD=postgres
-      - POSTGRESQL_MASTER_HOST=postgresql
-      - POSTGRESQL_PGAUDIT_LOG=READ,WRITE
-      - POSTGRESQL_LOG_HOSTNAME=true
-      - POSTGRESQL_REPLICATION_MODE=slave
-      - POSTGRESQL_REPLICATION_USER=replica
-      - POSTGRESQL_REPLICATION_PASSWORD=replica
-      - POSTGRESQL_MASTER_PORT_NUMBER=5432
+      - "POSTGRES_PASSWORD=postgres"
+      - "POSTGRES_DB=postgres"
+    networks:
+      - pg_network
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
@@ -78,7 +59,11 @@ services:
 networks:
   broker-kafka:
     driver: bridge
+  pg_network:
+    driver: bridge
 
 volumes:
-  postgresql_master_data:
+  read-database-data:
+    driver: local
+  database-data:
     driver: local
