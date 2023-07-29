@@ -4,6 +4,13 @@ Microsservice, CQRS pattern and clean code and async call, I divide the problem 
 
 ![Diagram of CNAB transactions challenge representing modules communication flow](/assets/cnab-transactions-challenge.jpg "Diagram of CNAB transactions challenge representing modules communication flow")
 
+## :sparkles: Features
+
+- Optimized for large CNAB file (Webworkers & Websocket)
+- Assynchronous parsing (don't stuck user in front of screen waiting process the file)
+- Read-only replica for queries (CQRS pattern)
+- Two phase validation (syntax <> content)
+
 ## :wrench: Tools
 
 Some tools help me during sorting data for solving this challenge.
